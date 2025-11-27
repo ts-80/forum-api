@@ -6,12 +6,13 @@ import { PrismaService } from 'src/database/prisma.service';
 @Injectable()
 export class AnswersService {
 
-  @Inject()
-  private readonly prisma: PrismaService;
+  
 
-
-  create(createAnswerDto: CreateAnswerDto, userId: number, questionId: number) {
-
+  constructor(private readonly prisma: PrismaService){}
+  
+  create(createAnswerDto: CreateAnswerDto, user: any, questionId: number) {
+    const userId = user.sub;
+    console.log('Creating answer for user:', userId);
 
     return this.prisma.answers.create({
       data: {
